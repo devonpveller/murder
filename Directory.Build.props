@@ -4,5 +4,11 @@
     <LangVersion>preview</LangVersion>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <ImplicitUsings>enable</ImplicitUsings>
+    <RestorePackagesWithLockFile>false</RestorePackagesWithLockFile>
   </PropertyGroup>
+
+  <!-- Disable NuGet restore for MonoGame packages; we use the vendored source instead. -->
+  <ItemGroup>
+    <NoWarn Include="NU1507" />
+  </ItemGroup>
 </Project>
