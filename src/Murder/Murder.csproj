@@ -41,7 +41,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\MonoGame\MonoGame.Framework\MonoGame.Framework.DesktopGL.csproj" />
+    <PackageReference Include="Murder.FNA" Version="26.4.1" />
   </ItemGroup>
 
   <ItemGroup>
