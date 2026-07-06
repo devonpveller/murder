@@ -1,4 +1,5 @@
 ﻿using Bang;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Murder.Assets;
@@ -1040,7 +1041,7 @@ namespace Murder
         /// </summary>
         public virtual void EndImGuiTheme() { }
 
-        protected override void OnExiting(object sender, EventArgs args)
+        protected override void OnExiting(object sender, ExitingEventArgs args)
         {
             GameLogger.Log("Wrapping up, bye!");
 

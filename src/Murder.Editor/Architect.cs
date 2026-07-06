@@ -1,5 +1,6 @@
 ﻿using Bang;
 using ImGuiNET;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Murder.Assets;
 using Murder.Attributes;
@@ -413,7 +414,7 @@ namespace Murder.Editor
             ImGuiRenderer.AfterLayout();
         }
 
-        protected override void OnExiting(object sender, EventArgs args)
+        protected override void OnExiting(object sender, ExitingEventArgs args)
         {
             GameLogger.Log("Wrapping up, bye!");
 
