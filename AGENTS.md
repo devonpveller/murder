@@ -13,7 +13,7 @@ for its ECS framework. The engine ships its own editor (no external editor.exe)
 — editor code lives in a separate project so it never pollutes game code.
 
 > **Architecture rule**: murder builds from vendored MonoGame source; never use
-> the `Murder.FNA` NuGet package. This repo is a git submodule inside
+> the FNA-based NuGet package. This repo is a git submodule inside
 > `monogame-engine` at `vendor/murder`, with sibling submodule `vendor/MonoGame`.
 
 ## How to work in it
