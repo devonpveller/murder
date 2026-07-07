@@ -70,7 +70,7 @@ namespace Murder.Core.Geometry
         /// Converts this point into a <see cref="Vector2"/>.
         /// </summary>
         /// <returns>A vector with x and y equal to this point's x and y.</returns>
-        public static implicit operator Vector2(Point p) => new(p.X, p.Y);
+        public static explicit operator Vector2(Point p) => new(p.X, p.Y);
 
         /// <summary>
         /// Converts this point into a <see cref="Microsoft.Xna.Framework.Point"/>.

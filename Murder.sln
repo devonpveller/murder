@@ -23,6 +23,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Murder.Serializer", "src\Mu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Murder.Tests", "src\Murder.Tests\Murder.Tests.csproj", "{83C32CF4-80FD-48AE-B20E-AA0993B08697}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MonoGame.Framework.DesktopGL", "..\MonoGame\MonoGame.Framework\MonoGame.Framework.DesktopGL.csproj", "{E5C0EC95-CEE2-4FE3-AF4B-477F77FBD6DF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +71,10 @@ Global
 		{83C32CF4-80FD-48AE-B20E-AA0993B08697}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{83C32CF4-80FD-48AE-B20E-AA0993B08697}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{83C32CF4-80FD-48AE-B20E-AA0993B08697}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E5C0EC95-CEE2-4FE3-AF4B-477F77FBD6DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E5C0EC95-CEE2-4FE3-AF4B-477F77FBD6DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E5C0EC95-CEE2-4FE3-AF4B-477F77FBD6DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E5C0EC95-CEE2-4FE3-AF4B-477F77FBD6DF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
