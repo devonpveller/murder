@@ -413,7 +413,7 @@ namespace Murder.Editor
             ImGuiRenderer.AfterLayout();
         }
 
-        protected override void OnExiting()
+        protected override void OnExiting(object sender, Microsoft.Xna.Framework.ExitingEventArgs args)
         {
             GameLogger.Log("Wrapping up, bye!");
 

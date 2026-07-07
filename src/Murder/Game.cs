@@ -1040,7 +1040,7 @@ namespace Murder
         /// </summary>
         public virtual void EndImGuiTheme() { }
 
-        protected override void OnExiting()
+        protected override void OnExiting(object sender, Microsoft.Xna.Framework.ExitingEventArgs args)
         {
             GameLogger.Log("Wrapping up, bye!");
 
