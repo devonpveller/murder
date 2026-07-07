@@ -6,10 +6,15 @@
 
 ## What this repo is
 
-**Murder Engine** — a pixel art ECS game engine built on top of FNA (via the
-`Murder.FNA` NuGet package). Written in C# / .NET 8. Uses [Bang](https://github.com/isadorasophia/bang)
+**Murder Engine** — a pixel art ECS game engine built on top of vendored
+MonoGame source (project reference to `../MonoGame/MonoGame.Framework/`).
+Written in C# / .NET 8. Uses [Bang](https://github.com/isadorasophia/bang)
 for its ECS framework. The engine ships its own editor (no external editor.exe)
 — editor code lives in a separate project so it never pollutes game code.
+
+> **Architecture rule**: murder builds from vendored MonoGame source; never use
+> the `Murder.FNA` NuGet package. This repo is a git submodule inside
+> `monogame-engine` at `vendor/murder`, with sibling submodule `vendor/MonoGame`.
 
 ## How to work in it
 
@@ -17,6 +22,7 @@ for its ECS framework. The engine ships its own editor (no external editor.exe)
 - **Test**: `dotnet test src/Murder.Tests`
 - **CI**: GitHub Actions builds on Linux, Windows, macOS (see `.github/workflows/ci.yml`)
 - **Submodules**: `bang/` and `gum/` are git submodules (fetched recursively in CI)
+- **Vendored MonoGame**: Build requires `../MonoGame/` sibling (from `monogame-engine` parent repo)
 
 ## Layout
 
