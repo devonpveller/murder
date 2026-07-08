@@ -269,9 +269,9 @@ public class PixelFontSize
 
         string text = textData.Text;
 
-        position = position.Round();
+        position = (Vector2)position.Round();
 
-        Vector2 offset = Offset;
+        Vector2 offset = (Vector2)Offset;
         Vector2 justified = new(Calculator.RoundToInt((WidthToNextLine(text, 0, true) - 1) * origin.X * scale.X), HeightOf(text) * origin.Y * scale.Y);
 
         Color currentColor = color;
@@ -381,7 +381,7 @@ public class PixelFontSize
             if (letter?.Icon is Portrait icon)
             {
                 Point pos = (position + (offset + new Vector2(0, LineHeight - 1) * scale - justified) + effects).Floor();
-                RenderServices.DrawPortrait(spriteBatch, icon, pos, new DrawInfo(sort) { Origin = new(0, 0) });
+                RenderServices.DrawPortrait(spriteBatch, icon, (Vector2)pos, new DrawInfo(sort) { Origin = new(0, 0) });
 
                 offset.X += 6;
                 currentWidth += 6;
@@ -443,28 +443,28 @@ public class PixelFontSize
                 {
                     if (shadowColor.HasValue)
                     {
-                        texture.Draw(spriteBatch, pos + new Point(-1, 2) * scale, scale, glyph, shadowColor.Value, ImageFlip.None, sort + 0.0002f, RenderServices.BLEND_NORMAL);
-                        texture.Draw(spriteBatch, pos + new Point(0, 2) * scale, scale, glyph, shadowColor.Value, ImageFlip.None, sort + 0.0002f, RenderServices.BLEND_NORMAL);
-                        texture.Draw(spriteBatch, pos + new Point(1, 2) * scale, scale, glyph, shadowColor.Value, ImageFlip.None, sort + 0.0002f, RenderServices.BLEND_NORMAL);
+                        texture.Draw(spriteBatch, (Vector2)pos + new Vector2(-1, 2) * scale, scale, glyph, shadowColor.Value, ImageFlip.None, sort + 0.0002f, RenderServices.BLEND_NORMAL);
+                        texture.Draw(spriteBatch, (Vector2)pos + new Vector2(0, 2) * scale, scale, glyph, shadowColor.Value, ImageFlip.None, sort + 0.0002f, RenderServices.BLEND_NORMAL);
+                        texture.Draw(spriteBatch, (Vector2)pos + new Vector2(1, 2) * scale, scale, glyph, shadowColor.Value, ImageFlip.None, sort + 0.0002f, RenderServices.BLEND_NORMAL);
                     }
 
-                    texture.Draw(spriteBatch, pos + new Point(-1, -1) * scale, scale, glyph, strokeColor.Value, ImageFlip.None, sort + 0.0001f, RenderServices.BLEND_NORMAL);
-                    texture.Draw(spriteBatch, pos + new Point(0, -1) * scale, scale, glyph, strokeColor.Value, ImageFlip.None, sort + 0.0001f, RenderServices.BLEND_NORMAL);
-                    texture.Draw(spriteBatch, pos + new Point(1, -1) * scale, scale, glyph, strokeColor.Value, ImageFlip.None, sort + 0.0001f, RenderServices.BLEND_NORMAL);
-                    texture.Draw(spriteBatch, pos + new Point(-1, 0) * scale, scale, glyph, strokeColor.Value, ImageFlip.None, sort + 0.0001f, RenderServices.BLEND_NORMAL);
-                    texture.Draw(spriteBatch, pos + new Point(1, 0) * scale, scale, glyph, strokeColor.Value, ImageFlip.None, sort + 0.0001f, RenderServices.BLEND_NORMAL);
-                    texture.Draw(spriteBatch, pos + new Point(-1, 1) * scale, scale, glyph, strokeColor.Value, ImageFlip.None, sort + 0.0001f, RenderServices.BLEND_NORMAL);
-                    texture.Draw(spriteBatch, pos + new Point(0, 1) * scale, scale, glyph, strokeColor.Value, ImageFlip.None, sort + 0.0001f, RenderServices.BLEND_NORMAL);
-                    texture.Draw(spriteBatch, pos + new Point(1, 1) * scale, scale, glyph, strokeColor.Value, ImageFlip.None, sort + 0.0001f, RenderServices.BLEND_NORMAL);
+                    texture.Draw(spriteBatch, (Vector2)pos + new Vector2(-1, -1) * scale, scale, glyph, strokeColor.Value, ImageFlip.None, sort + 0.0001f, RenderServices.BLEND_NORMAL);
+                    texture.Draw(spriteBatch, (Vector2)pos + new Vector2(0, -1) * scale, scale, glyph, strokeColor.Value, ImageFlip.None, sort + 0.0001f, RenderServices.BLEND_NORMAL);
+                    texture.Draw(spriteBatch, (Vector2)pos + new Vector2(1, -1) * scale, scale, glyph, strokeColor.Value, ImageFlip.None, sort + 0.0001f, RenderServices.BLEND_NORMAL);
+                    texture.Draw(spriteBatch, (Vector2)pos + new Vector2(-1, 0) * scale, scale, glyph, strokeColor.Value, ImageFlip.None, sort + 0.0001f, RenderServices.BLEND_NORMAL);
+                    texture.Draw(spriteBatch, (Vector2)pos + new Vector2(1, 0) * scale, scale, glyph, strokeColor.Value, ImageFlip.None, sort + 0.0001f, RenderServices.BLEND_NORMAL);
+                    texture.Draw(spriteBatch, (Vector2)pos + new Vector2(-1, 1) * scale, scale, glyph, strokeColor.Value, ImageFlip.None, sort + 0.0001f, RenderServices.BLEND_NORMAL);
+                    texture.Draw(spriteBatch, (Vector2)pos + new Vector2(0, 1) * scale, scale, glyph, strokeColor.Value, ImageFlip.None, sort + 0.0001f, RenderServices.BLEND_NORMAL);
+                    texture.Draw(spriteBatch, (Vector2)pos + new Vector2(1, 1) * scale, scale, glyph, strokeColor.Value, ImageFlip.None, sort + 0.0001f, RenderServices.BLEND_NORMAL);
                 }
                 else if (shadowColor.HasValue)
                 {
                     // Use 0.001f as the sort so draw the shadow under the font.
-                    texture.Draw(spriteBatch, pos + new Point(0, 1), Vector2.One * scale, glyph, shadowColor.Value, ImageFlip.None, sort + 0.002f, RenderServices.BLEND_NORMAL);
+                    texture.Draw(spriteBatch, (Vector2)(pos + new Point(0, 1)), Vector2.One * scale, glyph, shadowColor.Value, ImageFlip.None, sort + 0.002f, RenderServices.BLEND_NORMAL);
                 }
 
                 // draw normal character
-                texture.Draw(spriteBatch, pos, Vector2.One * scale, glyph, currentColor, ImageFlip.None, sort, RenderServices.BLEND_NORMAL);
+                texture.Draw(spriteBatch, (Vector2)pos, Vector2.One * scale, glyph, currentColor, ImageFlip.None, sort, RenderServices.BLEND_NORMAL);
 
                 offset.X += c.XAdvance * scale.X;
                 currentWidth += c.XAdvance * scale.X;
@@ -484,7 +484,7 @@ public class PixelFontSize
             RenderServices.DrawHorizontalLine(spriteBatch, (int)position.X - 4, (int)position.Y, 8, Color.Red, 0);
             RenderServices.DrawVerticalLine(spriteBatch, (int)position.X, (int)position.Y - 4, 8, Color.Red, 0);
 
-            RenderServices.DrawRectangleOutline(spriteBatch, new Rectangle(position - size * origin, size), Color.White, 1, 0.001f);
+            RenderServices.DrawRectangleOutline(spriteBatch, new Rectangle(position - (Vector2)size * origin, (Vector2)size), Color.White, 1, 0.001f);
         }
 
         return size;
