@@ -127,7 +127,7 @@ public static class PhysicsServices
         ColliderComponent collider = target.GetCollider();
         Vector2 position = target.GetGlobalPosition();
 
-        return collider.GetBoundingBox(position.Point(), target.FetchScale());
+        return collider.GetBoundingBox(position, target.FetchScale());
     }
 
     public readonly struct RaycastHit
@@ -410,7 +410,7 @@ public static class PhysicsServices
                             break;
                         case LazyShape lazy:
                             {
-                                var otherRect = lazy.Rectangle(position.ToPoint());
+                                var otherRect = lazy.Rectangle(position);
                                 if (line.TryGetIntersectingPoint(otherRect, out Vector2 hitPoint))
                                 {
                                     CompareShapeHits(startPosition, ref hit, ref hitSomething, ref closest, e, hitPoint.Point());
@@ -440,11 +440,11 @@ public static class PhysicsServices
 
     private static void CompareShapeHits(Vector2 startPosition, ref RaycastHit hit, ref bool hitSomething, ref float closest, NodeInfo<Entity> e, Point hitPosition)
     {
-        var hitDistanceSq = (startPosition - hitPosition).LengthSquared();
+        var hitDistanceSq = (startPosition - (Vector2)hitPosition).LengthSquared();
         if (hitDistanceSq < closest)
         {
             closest = hitDistanceSq;
-            hit = new RaycastHit(e.EntityInfo, hitPosition);
+            hit = new RaycastHit(e.EntityInfo, (Vector2)hitPosition);
             hitSomething = true;
         }
     }
@@ -521,7 +521,7 @@ public static class PhysicsServices
 
             foreach (var otherShape in otherCollider.Shapes)
             {
-                if (otherShape.GetPolygon().Polygon.Contains(position - other.GlobalPosition))
+                if (otherShape.GetPolygon().Polygon.Contains(position - (Vector2)other.GlobalPosition))
                 {
                     if (world.TryGetEntity(other.EntityId) is Entity otherEntity)
                     {
@@ -857,7 +857,7 @@ public static class PhysicsServices
 
         // Now, check against other entities.
         Quadtree qt = world.GetUniqueQuadtree().Quadtree;
-        qt.GetCollisionEntitiesAt(GetBoundingBox(collider, position, scale), _cachedCollisions);
+        qt.GetCollisionEntitiesAt(GetBoundingBox(collider, (Vector2)position, scale), _cachedCollisions);
 
         foreach (var other in _cachedCollisions)
         {
@@ -927,7 +927,7 @@ public static class PhysicsServices
                 foreach (var otherShape in other.Collider.Shapes)
                 {
                     var polyB = otherShape.GetPolygon();
-                    if (polyA.Polygon.Intersects(polyB.Polygon, toPosition, other.GlobalPosition) is Vector2 colliderMtv && colliderMtv.HasValue())
+                    if (polyA.Polygon.Intersects(polyB.Polygon, toPosition, (Vector2)other.GlobalPosition) is Vector2 colliderMtv && colliderMtv.HasValue())
                     {
                         // The hit ID is the ID of the closest entity
                         float currentMtvLengthSquared = colliderMtv.LengthSquared();
@@ -984,7 +984,7 @@ public static class PhysicsServices
                 {
                     var polyB = otherShape.GetPolygon();
                     // TODO: This doesn't take into account the scale of the other entity.
-                    if (polyA.Polygon.Intersects(polyB.Polygon, position.Point(), other.GlobalPosition) is Vector2 mtv && mtv.HasValue())
+                    if (polyA.Polygon.Intersects(polyB.Polygon, position, (Vector2)other.GlobalPosition) is Vector2 mtv && mtv.HasValue())
                     {
                         hitId = other.EntityId;
                         mtvs.Add(mtv);
@@ -1018,7 +1018,7 @@ public static class PhysicsServices
                 foreach (var otherShape in otherCollider.Shapes)
                 {
                     var polyB = otherShape.GetPolygon();
-                    if (polyA.Polygon.Intersects(polyB.Polygon, position.Point(), other.GlobalPosition) is Vector2 mtv && mtv.HasValue())
+                    if (polyA.Polygon.Intersects(polyB.Polygon, position, (Vector2)other.GlobalPosition) is Vector2 mtv && mtv.HasValue())
                     {
                         hitId = other.EntityId;
                         return mtv;
@@ -1212,7 +1212,7 @@ public static class PhysicsServices
         // Polygon vs. Polygon - Most common case
         if (shape1 is PolygonShape poly1 && shape2 is PolygonShape poly2)
         {
-            return poly1.Polygon.CheckOverlapAt(poly2.Polygon, relativePos12, scale1, scale2);
+            return poly1.Polygon.CheckOverlapAt(poly2.Polygon, (Vector2)relativePos12, scale1, scale2);
         }
 
         // Polygon vs. Rectangle - Also very common
@@ -1287,21 +1287,21 @@ public static class PhysicsServices
         // Lazy vs. Line
         if (shape1 is LineShape lineA && shape2 is LazyShape lazyG)
         {
-            return lineA.LineAtPosition(position1).IntersectsRect(lazyG.Rectangle(position2));
+            return lineA.LineAtPosition(position1).IntersectsRect(lazyG.Rectangle((Vector2)position2));
         }
         if (shape1 is LazyShape lazyH && shape2 is LineShape lineB)
         {
-            return lineB.LineAtPosition(position2).IntersectsRect(lazyH.Rectangle(position1));
+            return lineB.LineAtPosition(position2).IntersectsRect(lazyH.Rectangle((Vector2)position1));
         }
 
         // Lazy vs. Polygon
         if (shape1 is PolygonShape polyA && shape2 is LazyShape lazyI)
         {
-            return polyA.Polygon.Intersect(lazyI.Rectangle(relativePos21), scale1);
+            return polyA.Polygon.Intersect(lazyI.Rectangle((Vector2)relativePos21), scale1);
         }
         if (shape1 is LazyShape lazyJ && shape2 is PolygonShape polyB)
         {
-            return polyB.Polygon.Intersect(lazyJ.Rectangle(relativePos12), scale2);
+            return polyB.Polygon.Intersect(lazyJ.Rectangle((Vector2)relativePos12), scale2);
         }
 
         // Point vs. Box
@@ -1367,11 +1367,11 @@ public static class PhysicsServices
         // Point vs. Line
         if (shape1 is LineShape lineC && shape2 is PointShape pointG)
         {
-            return lineC.LineAtPosition(position1).HasPoint(pointG.Point + position2);
+            return lineC.LineAtPosition(position1).HasPoint((Vector2)(pointG.Point + position2));
         }
         if (shape1 is PointShape pointH && shape2 is LineShape lineD)
         {
-            return lineD.LineAtPosition(position2).HasPoint(pointH.Point + position1);
+            return lineD.LineAtPosition(position2).HasPoint((Vector2)(pointH.Point + position1));
         }
 
         // Line vs Circle
@@ -1542,7 +1542,7 @@ public static class PhysicsServices
                     break;
 
                 case LineShape lineShape:
-                    contains = lineShape.Line.HasPoint(point);
+                    contains = lineShape.Line.HasPoint((Vector2)point);
                     break;
 
                 case BoxShape box:
@@ -1737,11 +1737,11 @@ public static class PhysicsServices
         var coneEndMax = coneStart + new Vector2(range, 0).Rotate(angle + angleRange / 2f);
 
         var polygon = new Polygon([
-            coneStart1.Point(),
-            coneEndMin.Point(),
-            coneEnd.Point(),
-            coneEndMax.Point(),
-            coneStart2.Point()
+            coneStart1,
+            coneEndMin,
+            coneEnd,
+            coneEndMax,
+            coneStart2
         ]);
 
         Rectangle boundingBox = polygon.GetBoundingBox();
@@ -1768,17 +1768,17 @@ public static class PhysicsServices
             {
                 if (otherShape is LazyShape lazy)
                 {
-                    if (polygon.Intersect(lazy.Rectangle(otherPosition)))
+                    if (polygon.Intersect(lazy.Rectangle((Vector2)otherPosition)))
                         yield return other.EntityInfo;
                 }
                 else if (otherShape is BoxShape box)
                 {
-                    if (polygon.Intersect(box.Rectangle.AddPosition(otherPosition)))
+                    if (polygon.Intersect(box.Rectangle.AddPosition((Vector2)otherPosition)))
                         yield return other.EntityInfo;
                 }
                 else if (otherShape is PolygonShape poly)
                 {
-                    if (polygon.CheckOverlapAt(poly.Polygon, otherPosition - coneStart))
+                    if (polygon.CheckOverlapAt(poly.Polygon, (Vector2)otherPosition - coneStart))
                         yield return other.EntityInfo;
                 }
                 else if (otherShape is CircleShape circle)
