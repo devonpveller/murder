@@ -47,15 +47,15 @@ public readonly struct Viewport
         {
             case ScalingKind.OneX:
                 Scale = Vector2.One;
-                OutputRectangle = CenterOutput(nativeResolution.ToVector2(), viewportSize);
+                OutputRectangle = CenterOutput(nativeResolution.ToVector2(), (Vector2)viewportSize);
                 break;
             case ScalingKind.TwoX:
                 Scale = new Vector2(2, 2);
-                OutputRectangle = CenterOutput(nativeResolution.ToVector2() * 2, viewportSize);
+                OutputRectangle = CenterOutput(nativeResolution.ToVector2() * 2, (Vector2)viewportSize);
                 break;
             case ScalingKind.ThreeX:
                 Scale = new Vector2(3, 3);
-                OutputRectangle = CenterOutput(nativeResolution.ToVector2() * 3, viewportSize);
+                OutputRectangle = CenterOutput(nativeResolution.ToVector2() * 3, (Vector2)viewportSize);
                 break;
             case ScalingKind.Large:
                 {
@@ -73,7 +73,7 @@ public readonly struct Viewport
 
                     // Set the scale and output rectangle based on the new native resolution
                     Scale = new Vector2(targetScale);
-                    OutputRectangle = CenterOutput(outputSize, viewportSize);
+                    OutputRectangle = CenterOutput(outputSize, (Vector2)viewportSize);
                     NativeResolution = newNativeResolution;
                     break;
                 }
@@ -98,7 +98,7 @@ public readonly struct Viewport
 
                     // Set the scale and output rectangle based on the new native resolution
                     Scale = new Vector2(targetScale);
-                    OutputRectangle = CenterOutput(outputSize, viewportSize);
+                    OutputRectangle = CenterOutput(outputSize, (Vector2)viewportSize);
                     NativeResolution = newNativeResolution;
                     break;
                 }
@@ -136,7 +136,7 @@ public readonly struct Viewport
 
                     outputSize = newNativeResolution.ToVector2() * targetScale;
                     Scale = new Vector2(targetScale);
-                    OutputRectangle = CenterOutput(outputSize, viewportSize);
+                    OutputRectangle = CenterOutput(outputSize, (Vector2)viewportSize);
                     NativeResolution = newNativeResolution;
                     break;
                 }
@@ -144,7 +144,7 @@ public readonly struct Viewport
                 break;
         }
 
-        Center = NativeResolution / 2f;
+        Center = (Vector2)NativeResolution / 2f;
     }
     private static void AutoScale(Point viewportSize, Point nativeResolution, out Point newNativeResolution, out float targetScale, out Vector2 outputSize)
     {
