@@ -54,7 +54,7 @@ public static partial class RenderServices
         float sort = .1f) =>
         DrawVerticalMenu(batch, position, position, style, menuInfo, sort);
 
-    internal static Vector2 CalculateSelectorPositionForVerticalMenu(int index, int lineHeight, Point finalPosition) => new Point(0, lineHeight * (index + 1)) + finalPosition;
+    internal static Vector2 CalculateSelectorPositionForVerticalMenu(int index, int lineHeight, Point finalPosition) => (Vector2)(new Point(0, lineHeight * (index + 1)) + finalPosition);
 
     /// <summary>
     /// TODO: Pass around a "style" for background color, sounds, etc.
@@ -75,7 +75,7 @@ public static partial class RenderServices
         Point finalPosition = new(Math.Max(position.X, 0), Math.Max(position.Y, 0));
         Point textFinalPosition = new(Math.Max(textPosition.X, 0), Math.Max(textPosition.Y, 0));
 
-        Vector2 CalculateText(int index) => new Point(0, MathF.Floor(lineHeight * (index + 1.25f))) + textFinalPosition;
+        Vector2 CalculateText(int index) => (Vector2)(new Point(0, MathF.Floor(lineHeight * (index + 1.25f))) + textFinalPosition);
 
         for (int i = 0; i < menuInfo.Length; i++)
         {
@@ -121,7 +121,7 @@ public static partial class RenderServices
                     DrawSprite(
                         batch,
                         sprite,
-                        labelPosition - new Point(15 - bounceX, 0),
+                        labelPosition - (Vector2)new Point(15 - bounceX, 0),
                         new DrawInfo(sort: sort),
                         new AnimationInfo(animation));
                 }
@@ -227,7 +227,7 @@ public static partial class RenderServices
         };
 
         var image = asset.GetFrame(frameInfo.Frame);
-        Vector2 offset = (asset.Origin + origin * image.Size).Round();
+        Vector2 offset = (Vector2)((Vector2)asset.Origin + origin * (Vector2)image.Size).Round();
         Vector2 position = pos.Round();
 
         image.Draw(
@@ -292,7 +292,7 @@ public static partial class RenderServices
         };
 
         var image = asset.GetFrame(animation.Frames[frameInfo.Frame]);
-        Vector2 offset = (asset.Origin + origin * image.Size).Round();
+        Vector2 offset = (Vector2)((Vector2)asset.Origin + origin * (Vector2)image.Size).Round();
         Vector2 position = pos.Round();
 
         image.Draw(
@@ -611,7 +611,7 @@ public static partial class RenderServices
         };
 
         AtlasCoordinates image = asset.GetFrame(frameInfo.Frame);
-        Vector2 offset = (asset.Origin + drawInfo.Origin * image.Size).Round();
+        Vector2 offset = (Vector2)((Vector2)asset.Origin + drawInfo.Origin * (Vector2)image.Size).Round();
         Vector2 roundedPosition = position.Round();
         void DrawImageAt(Vector2 pos, Color color, bool wash, float sort)
         {
@@ -689,7 +689,7 @@ public static partial class RenderServices
         };
 
         AtlasCoordinates image = asset.GetFrame(frameInfo.Frame);
-        Vector2 offset = (asset.Origin + drawInfo.Origin * image.Size).Round();
+        Vector2 offset = (Vector2)((Vector2)asset.Origin + drawInfo.Origin * (Vector2)image.Size).Round();
         Vector2 roundedPosition = position.Round();
         void DrawImageAt(Vector2 pos, Color color, bool wash, float sort)
         {
