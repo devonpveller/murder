@@ -23,7 +23,7 @@ namespace Murder.Core.Geometry
         public Rectangle Rectangle => new Rectangle(-Calculator.RoundToInt(Width * Origin.X) + Offset.X, -Calculator.RoundToInt(Height * Origin.Y) + Offset.Y, Width, Height);
 
 
-        public Rectangle GetBoundingBox() => new(Offset - Origin * Size, Size);
+        public Rectangle GetBoundingBox() => new(Offset - (Origin * Size.ToVector2()).Point(), Size);
 
         public BoxShape(Rectangle rectangle)
         {
@@ -43,7 +43,7 @@ namespace Murder.Core.Geometry
 
         public BoxShape ResizeTopLeft(Vector2 newTopLeft)
         {
-            Vector2 delta = Offset - newTopLeft;
+            Vector2 delta = Offset.ToVector2() - newTopLeft;
             return new BoxShape(
                 Origin,
                 newTopLeft.Point(),
@@ -53,8 +53,8 @@ namespace Murder.Core.Geometry
         }
         public BoxShape ResizeBottomRight(Vector2 newBottomRight)
         {
-            Point origin = ((Vector2.One - Origin) * Size).Point();
-            Vector2 delta = Offset + origin - newBottomRight;
+            Point origin = ((Vector2.One - Origin) * Size.ToVector2()).Point();
+            Vector2 delta = (Offset + origin).ToVector2() - newBottomRight;
             return new BoxShape(
                 Origin,
                 Offset,

@@ -13,7 +13,7 @@ namespace Murder.Core.Geometry
             End = end;
         }
 
-        public Line2 Line => new Line2(Start, End);
+        public Line2 Line => new Line2(Start.ToVector2(), End.ToVector2());
 
         public Line2 LineAtPosition(Point position) => new Line2((Start + position).ToVector2(), (End + position).ToVector2());
 
