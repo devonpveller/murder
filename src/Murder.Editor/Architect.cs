@@ -187,7 +187,7 @@ namespace Murder.Editor
             }
 
             _graphics.IsFullScreen = false;
-            Window.IsBorderlessEXT = false;
+            Window.IsBorderless = false;
 
             _graphics.PreferredBackBufferWidth = screenSize.X;
             _graphics.PreferredBackBufferHeight = screenSize.Y;
@@ -413,7 +413,7 @@ namespace Murder.Editor
             ImGuiRenderer.AfterLayout();
         }
 
-        protected override void OnExiting(object sender, EventArgs args)
+        protected override void OnExiting(object sender, Microsoft.Xna.Framework.ExitingEventArgs args)
         {
             GameLogger.Log("Wrapping up, bye!");
 
@@ -454,55 +454,28 @@ namespace Murder.Editor
 
         protected bool IsMaximized()
         {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-            {
-                SDL3.SDL.SDL_WindowFlags windowState = SDL3.SDL.SDL_GetWindowFlags(Window.Handle);
-                return (windowState & SDL3.SDL.SDL_WindowFlags.SDL_WINDOW_MAXIMIZED) != 0;
-            }
-
-            return false;
+            // MonoGame doesn't expose a direct maximized state; approximate by checking
+            // if the client bounds are significantly larger than the preferred back buffer.
+            var bounds = Window.ClientBounds;
+            return bounds.Width > _graphics.PreferredBackBufferWidth * 2 &&
+                   bounds.Height > _graphics.PreferredBackBufferHeight * 2;
         }
 
         protected void MaximizeWindow()
         {
-            // Not sure what is not supported here?
-            bool supportedOs = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
-
-            if (supportedOs)
-            {
-                SDL3.SDL.SDL_MaximizeWindow(Window.Handle);
-            }
+            // MonoGame DesktopGL: use fullscreen desktop mode as the closest equivalent.
+            Fullscreen = true;
         }
 
         protected Point? GetWindowPosition()
         {
-            // Not sure what is not supported here?
-            bool supportedOs = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ||
-                RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ||
-                RuntimeInformation.IsOSPlatform(OSPlatform.OSX);
-
-            if (supportedOs)
-            {
-                SDL3.SDL.SDL_GetWindowPosition(Window.Handle, out int x, out int y);
-                return new(x, y);
-            }
-
-            return null;
+            return Window.Position;
         }
 
         protected bool SetWindowPosition(Point p)
         {
-            // Not sure what is not supported here?
-            bool supportedOs = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) || RuntimeInformation.IsOSPlatform(OSPlatform.Linux)
-                || RuntimeInformation.IsOSPlatform(OSPlatform.OSX);
-
-            if (supportedOs)
-            {
-                SDL3.SDL.SDL_SetWindowPosition(Window.Handle, p.X, p.Y);
-                return true;
-            }
-
-            return false;
+            Window.Position = p;
+            return true;
         }
 
         /// <summary>
@@ -550,8 +523,7 @@ namespace Murder.Editor
                 EditorData.ReloadShaders();
             }
 
-            // TODO: Figure out how to listen to drop file events
-            SDL3.SDL.SDL_SetEventEnabled((uint)SDL3.SDL.SDL_EventType.SDL_EVENT_DROP_FILE, true);
+            // File drop events are handled via Window.FileDrop in MonoGame
             UpdateCursor();
         }
 

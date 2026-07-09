@@ -489,7 +489,7 @@ namespace Murder.Services
             }
 
             bool valid = false;
-            Rectangle newRectangleArea = new(endPosition, size);
+            Rectangle newRectangleArea = new(endPosition, (Vector2)size);
 
             // Check whether we are within any of the colliders.
             foreach (IntRectangle collider in area)

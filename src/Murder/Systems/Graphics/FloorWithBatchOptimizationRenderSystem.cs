@@ -12,6 +12,7 @@ using Murder.Services;
 using System.Collections.Immutable;
 using Murder.Core.Geometry;
 using System.Diagnostics;
+using System.Numerics;
 
 
 namespace Murder.Systems;
@@ -108,7 +109,7 @@ public class FloorWithBatchOptimizationRenderSystem : IMurderRenderSystem, IExit
         foreach (Point index in _chunksToDraw)
         {
             var chunk = _chunks[index];
-            var success = _atlas.Draw(chunk.Id, render.FloorBatch, chunk.Position * TileChunkSize * Grid.CellSize, new DrawInfo(RenderServices.YSort((chunk.Position.Y - 2) * Grid.CellSize)));
+            var success = _atlas.Draw(chunk.Id, render.FloorBatch, (Vector2)(chunk.Position * TileChunkSize * Grid.CellSize), new DrawInfo(RenderServices.YSort((chunk.Position.Y - 2) * Grid.CellSize)));
         }
     }
 

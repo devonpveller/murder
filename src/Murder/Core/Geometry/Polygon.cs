@@ -707,7 +707,7 @@ namespace Murder.Core.Geometry
         /// <returns></returns>
         internal Polygon AddPosition(Point position)
         {
-            return new Polygon(Vertices, position);
+            return new Polygon(Vertices, (Vector2)position);
         }
 
         public (float Min, float Max) ProjectOntoAxis(Vector2 axis, Vector2 offset)
@@ -816,7 +816,7 @@ namespace Murder.Core.Geometry
         {
             var builder = ImmutableArray.CreateBuilder<Vector2>(initialCapacity: Vertices.Length);
 
-            var delta = target - Vertices[0];
+            var delta = (Vector2)target - Vertices[0];
             foreach (var vertex in Vertices)
             {
                 builder.Add(vertex + delta);

@@ -57,8 +57,8 @@ namespace Murder.Core.Graphics
         /// </summary>
         public Point GetCursorWorldPosition(Point screenOffset, Point viewportSize)
         {
-            Vector2 scale = new Vector2(Width, Height) / viewportSize;
-            return ScreenToWorldPosition((Game.Input.CursorPosition - screenOffset) * scale).Point();
+            Vector2 scale = new Vector2(Width, Height) / viewportSize.ToVector2();
+            return ScreenToWorldPosition((Game.Input.CursorPosition - screenOffset).ToVector2() * scale).Point();
         }
 
         /// <summary>

@@ -10,6 +10,7 @@ using Murder.Messages;
 using Murder.Services;
 using Murder.Utilities;
 using System.Collections.Immutable;
+using System.Numerics;
 
 namespace Murder.Systems.Physics
 {
@@ -182,7 +183,7 @@ namespace Murder.Systems.Physics
             }
 
             _others.Clear();
-            Rectangle boundingBox = collider.GetBoundingBox(e.GetGlobalPosition().ToPoint(), e.FetchScale());
+            Rectangle boundingBox = collider.GetBoundingBox(e.GetGlobalPosition(), (Vector2)e.FetchScale());
             qt.Collision.Retrieve(boundingBox, _others);
 
             CollisionCacheComponent collisionCache = e.TryGetCollisionCache() ?? new CollisionCacheComponent();

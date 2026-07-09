@@ -134,7 +134,7 @@ namespace Murder.Core.Graphics
             spriteBatch.Draw(
                 Atlas,
                 (target.TopLeft + adjustPosition).ToXnaVector2(),
-                (intersection.Size * scale).ToXnaVector2(),
+                ((Vector2)intersection.Size * scale).ToXnaVector2(),
                 new Rectangle(
                     SourceRectangle.X - ContentOffset.X + intersection.X,
                     SourceRectangle.Y - ContentOffset.Y + intersection.Y,

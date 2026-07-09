@@ -257,7 +257,7 @@ public class SATPhysicsSystem : IFixedUpdateSystem
                     e.RemoveVelocity();
                     if (e.GetGlobalPositionIfValid() is Vector2 globalPosition)
                     {
-                        e.SetGlobalPosition(globalPosition.Round());
+                        e.SetGlobalPosition((Vector2)globalPosition.Round());
                     }
                 }
             }

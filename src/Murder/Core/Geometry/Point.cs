@@ -73,6 +73,11 @@ namespace Murder.Core.Geometry
         public static implicit operator Vector2(Point p) => new(p.X, p.Y);
 
         /// <summary>
+        /// Converts a <see cref="Vector2"/> into a <see cref="Point"/>.
+        /// </summary>
+        public static explicit operator Point(Vector2 v) => new((int)v.X, (int)v.Y);
+
+        /// <summary>
         /// Converts this point into a <see cref="Microsoft.Xna.Framework.Point"/>.
         /// </summary>
         public static implicit operator Microsoft.Xna.Framework.Point(Point p) => new(p.X, p.Y);
@@ -195,6 +200,56 @@ namespace Murder.Core.Geometry
         /// Subtracts both the X and Y values of the point <paramref name="b"/> by the X and Y values of the <see cref="PositionComponent"/> <paramref name="a"/>.
         /// </summary>
         public static Vector2 operator -(PositionComponent a, Point b) => new(a.X - b.X, a.Y - b.Y);
+
+        /// <summary>
+        /// Adds a <see cref="Vector2"/> and a <see cref="Point"/>.
+        /// </summary>
+        public static Vector2 operator +(Vector2 a, Point b) => new(a.X + b.X, a.Y + b.Y);
+
+        /// <summary>
+        /// Adds a <see cref="Point"/> and a <see cref="Vector2"/>.
+        /// </summary>
+        public static Vector2 operator +(Point a, Vector2 b) => new(a.X + b.X, a.Y + b.Y);
+
+        /// <summary>
+        /// Subtracts a <see cref="Point"/> from a <see cref="Vector2"/>.
+        /// </summary>
+        public static Vector2 operator -(Vector2 a, Point b) => new(a.X - b.X, a.Y - b.Y);
+
+        /// <summary>
+        /// Subtracts a <see cref="Vector2"/> from a <see cref="Point"/>.
+        /// </summary>
+        public static Vector2 operator -(Point a, Vector2 b) => new(a.X - b.X, a.Y - b.Y);
+
+        /// <summary>
+        /// Multiplies a <see cref="Point"/> by a <see cref="Vector2"/>.
+        /// </summary>
+        public static Vector2 operator *(Point a, Vector2 b) => new(a.X * b.X, a.Y * b.Y);
+
+        /// <summary>
+        /// Multiplies a <see cref="Vector2"/> by a <see cref="Point"/>.
+        /// </summary>
+        public static Vector2 operator *(Vector2 a, Point b) => new(a.X * b.X, a.Y * b.Y);
+
+        /// <summary>
+        /// Compares a <see cref="Vector2"/> with a <see cref="Point"/>.
+        /// </summary>
+        public static bool operator ==(Vector2 a, Point b) => a.X == b.X && a.Y == b.Y;
+
+        /// <summary>
+        /// Compares a <see cref="Vector2"/> with a <see cref="Point"/>.
+        /// </summary>
+        public static bool operator !=(Vector2 a, Point b) => a.X != b.X || a.Y != b.Y;
+
+        /// <summary>
+        /// Compares a <see cref="Point"/> with a <see cref="Vector2"/>.
+        /// </summary>
+        public static bool operator ==(Point a, Vector2 b) => a.X == b.X && a.Y == b.Y;
+
+        /// <summary>
+        /// Compares a <see cref="Point"/> with a <see cref="Vector2"/>.
+        /// </summary>
+        public static bool operator !=(Point a, Vector2 b) => a.X != b.X || a.Y != b.Y;
 
         /// <summary>
         /// Compares whether the point <paramref name="other"/> has the same X and Y value as this point.

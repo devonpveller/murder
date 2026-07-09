@@ -26,7 +26,7 @@ namespace Murder.Services
                 return IntRectangle.Empty;
             }
 
-            return collider.GetBoundingBox(position, e.FetchScale());
+            return collider.GetBoundingBox((Vector2)position, (Vector2)e.FetchScale());
         }
 
         public static Vector2 SnapToGrid(Vector2 positive)

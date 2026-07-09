@@ -98,7 +98,7 @@ public sealed class DynamicInCameraSystem : IMonoPreRenderSystem
                 // ----- Full AABB ---------------------------------------
                 Rectangle aabb = CalculateBounds(
                     adjustedPosition,
-                    (asset.Origin + sprite.Offset) / asset.Size,
+                    ((Vector2)asset.Origin + sprite.Offset) / (Vector2)asset.Size,
                     asset.Size,
                     scale,
                     flip);

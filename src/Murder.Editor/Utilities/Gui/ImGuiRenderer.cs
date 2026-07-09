@@ -265,20 +265,11 @@ namespace Murder.Editor.ImGuiExtended
             var io = ImGui.GetIO();
 
             // MonoGame-specific //////////////////////
-            //_game.Window.TextInput += (s, a) =>
-            //{
-            //    if (a.Character == '\t') return;
-
-            //    io.AddInputCharacter(a.Character);
-            //};
-            ///////////////////////////////////////////
-
-            // FNA-specific ///////////////////////////
-            TextInputEXT.TextInput += c =>
+            _game.Window.TextInput += (s, a) =>
             {
-                if (c == '\t') return;
+                if (a.Character == '\t') return;
 
-                ImGui.GetIO().AddInputCharacter(c);
+                io.AddInputCharacter(a.Character);
             };
             ///////////////////////////////////////////
 

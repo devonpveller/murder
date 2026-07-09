@@ -47,7 +47,7 @@ namespace Murder.Editor
 
             _shortcuts = CreateShortcutList();
 
-            FileDropEXT.DropFile += FileDropped;
+            Architect.Instance.Window.FileDrop += (_, e) => FileDropped(e.Files[0]);
         }
 
         protected void FileDropped(string path)
@@ -102,7 +102,7 @@ namespace Murder.Editor
         private void AfterInitialized()
         {
             // always keep the text input
-            TextInputEXT.StartTextInput();
+            // MonoGame handles text input via Window.TextInput event (no start/stop needed)
         }
 
         private void ReopenLastTabs()
@@ -133,7 +133,7 @@ namespace Murder.Editor
 
         protected override Task UnloadAsyncImpl()
         {
-            TextInputEXT.StopTextInput();
+            // MonoGame handles text input via Window.TextInput event (no stop needed)
             return Task.CompletedTask;
         }
 

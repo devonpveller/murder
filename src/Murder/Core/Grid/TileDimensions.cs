@@ -10,6 +10,6 @@ namespace Murder.Core
 
         public TileDimensions(Vector2 origin, Point size) => (Origin, Size) = (origin, size);
 
-        public static implicit operator Rectangle(TileDimensions t) => new(t.Origin, t.Size);
+        public static implicit operator Rectangle(TileDimensions t) => new(t.Origin, (Vector2)t.Size);
     }
 }

@@ -99,7 +99,7 @@ namespace Murder.Core.Physics
                 Vector2 pos = e.GetGlobalPosition();
                 if (e.TryGetCollider() is ColliderComponent collider)
                 {
-                    Collision.Insert(e.EntityId, e, collider.GetBoundingBox(pos.ToPoint(), e.FetchScale()));
+                    Collision.Insert(e.EntityId, e, collider.GetBoundingBox(pos, (Vector2)e.FetchScale()));
                 }
 
                 if (e.TryGetPushAway() is PushAwayComponent pushAway)
@@ -144,7 +144,7 @@ namespace Murder.Core.Physics
                     position.Y - spriteAsset.Origin.Y - spriteComponent.Offset.Y * spriteAsset.Size.Y - (diameter - spriteAsset.Size.Y) / 2f,
                     diameter, diameter);
 
-                StaticRender.Insert(e.EntityId, (e, spriteComponent, position), boundingBox);
+                StaticRender.Insert(e.EntityId, (e, spriteComponent, (Vector2)position), boundingBox);
 
                 // If you are panicking, turn this on
                 //e.SetCustomDraw(render =>

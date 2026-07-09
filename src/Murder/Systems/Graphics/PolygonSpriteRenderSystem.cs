@@ -8,6 +8,7 @@ using Murder.Core.Geometry;
 using Murder.Core.Graphics;
 using Murder.Services;
 using Murder.Utilities;
+using System.Numerics;
 
 namespace Murder.Systems;
 
@@ -32,7 +33,7 @@ public class PolygonSpriteRenderSystem : IMurderRenderSystem
                 switch (shape)
                 {
                     case CircleShape circle:
-                        RenderServices.DrawFilledCircle(batch, position + circle.Offset, circle.Radius,
+                        RenderServices.DrawFilledCircle(batch, (Vector2)position + (Vector2)circle.Offset, circle.Radius,
                             Circle.EstipulateSidesFromRadius(circle.Radius), info);
                         break;
                     default:
