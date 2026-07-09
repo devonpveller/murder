@@ -56,7 +56,16 @@ public class MurderVideoPlayer : IDisposable
             return;
         }
 
-        Video video = Video.FromUriEXT(uri: new(fullPath, UriKind.Absolute), Game.GraphicsDevice);
+        // MonoGame's Video class has internal constructors; use reflection to instantiate.
+        var videoCtor = typeof(Video).GetConstructor(
+            System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic,
+            null, new[] { typeof(string) }, null);
+        if (videoCtor == null)
+        {
+            GameLogger.Error($"Unable to create Video instance via reflection for {fullPath}");
+            return;
+        }
+        Video video = (Video)videoCtor.Invoke(new object[] { fullPath });
 
         _videoPlayer = new();
 

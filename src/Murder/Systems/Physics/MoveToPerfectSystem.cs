@@ -65,7 +65,7 @@ namespace Murder.Systems
                 double easedDelta = Ease.Evaluate(delta, moveToPerfect.EaseKind);
 
                 Vector2 current = Vector2Helper.LerpSnap(startPosition, moveToPerfect.Target, easedDelta);
-                e.SetGlobalPosition(current.Point());
+                e.SetGlobalPosition((Vector2)current.Point());
 
                 if (anyActorAvoidant && moveToPerfect.Settings.HasFlag(MoveToPerfectSettings.AvoidActors) && 
                     _cachedCandidates.Count != 0 && e.TryGetCollider() is ColliderComponent collider)

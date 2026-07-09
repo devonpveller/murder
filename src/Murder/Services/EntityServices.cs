@@ -456,7 +456,7 @@ public static class EntityServices
         {
             if (AssetServices.TryCreate(world, entityToSpawn) is Entity spawned)
             {
-                Vector2 position = Point.Zero;
+                Vector2 position = (Vector2)Point.Zero;
                 if (PhysicsServices.FindNextAvailablePosition(world, spawned, spawnerPosition, spawnerPosition + tentativePosition, CollisionLayersBase.SOLID | CollisionLayersBase.HOLE | CollisionLayersBase.ACTOR) is Vector2 targetGlobalPosition)
                 {
                     position = targetGlobalPosition;

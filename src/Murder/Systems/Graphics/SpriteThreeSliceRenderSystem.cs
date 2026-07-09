@@ -40,7 +40,7 @@ namespace Murder.Systems.Graphics
 
                 // This is as early as we can to check for out of bounds
                 if (s.TargetSpriteBatch != Batches2D.UiBatchId &&
-                    !render.Camera.Bounds.Touches(new Rectangle(position - ase.Size * s.Offset - ase.Origin, ase.Size)))
+                    !render.Camera.Bounds.Touches(new Rectangle(position - (Vector2)ase.Size * s.Offset - (Vector2)ase.Origin, (Vector2)ase.Size)))
                 {
                     continue;
                 }

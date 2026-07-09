@@ -8,6 +8,7 @@ using Murder.Core.Graphics;
 using Murder.Services;
 using Murder.Utilities;
 using System.Collections.Immutable;
+using System.Numerics;
 
 namespace Murder.Systems;
 
@@ -30,7 +31,7 @@ public class TextureRenderSystem : IMurderRenderSystem, IReactiveSystem, IExitSy
             // Will update this if the need arrives
             batch.Draw(
                 texture.Texture,
-                (e.GetGlobalPosition().ToPoint() + render.Camera.Position).ToXnaVector2(),
+                ((Vector2)e.GetGlobalPosition().ToPoint() + render.Camera.Position).ToXnaVector2(),
                 texture.Texture.Bounds.XnaSize(),
                 texture.Texture.Bounds,
                 0,
