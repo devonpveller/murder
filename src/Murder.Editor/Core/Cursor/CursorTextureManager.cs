@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using Murder.Assets;
 using Murder.Assets.Graphics;
 using Murder.Core.Graphics;
@@ -98,7 +99,7 @@ public class CursorTextureManager : IDisposable
             if (anim.Frame < info.Cursors.Length)
             {
                 // TODO: Fix shaders so we can do this. @_@
-                SDL3.SDL.SDL_SetCursor(info.Cursors[anim.Frame].Handle);
+                Mouse.SetCursor(info.Cursors[anim.Frame]);
                 _lastFrame = anim.Frame;
             }
         }
