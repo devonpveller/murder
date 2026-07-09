@@ -457,18 +457,18 @@ public class RenderContext : IDisposable
 
         RenderServices.DrawTextureQuad(_mainTarget,     // <=== Draws the game buffer to the final buffer using a optimized pixel shader
             _mainTarget.Bounds,
-            new Rectangle(_subPixelOffset, _mainTarget.Bounds.Size() * Viewport.Scale),
+            new Rectangle(_subPixelOffset, _mainTarget.Bounds.Size().ToVector2() * Viewport.Scale),
             Color.White, Game.Data.ShaderPixel, BlendState.Opaque, true);
 
         CreateDebugPreviewIfNecessary(BatchPreviewState.Step2, _finalTarget);
 
         _graphicsDevice.SetRenderTarget(_finalTarget);
 
-        Game.Data.ShaderPixel?.TrySetParameter("viewportSize", (_uiTarget.Bounds.Size() * Viewport.Scale).ToXnaVector2());
+        Game.Data.ShaderPixel?.TrySetParameter("viewportSize", (_uiTarget.Bounds.Size().ToVector2() * Viewport.Scale).ToXnaVector2());
         Game.Data.ShaderPixel?.TrySetParameter("textureSize", _uiTarget.Bounds.Size());
         RenderServices.DrawTextureQuad(_uiTarget,     // <=== Draws the ui buffer to the final buffer using a optimized pixel shader
             _uiTarget.Bounds,
-            new Rectangle(Vector2.Zero, _uiTarget.Bounds.Size() * Viewport.Scale),
+            new Rectangle(Vector2.Zero, _uiTarget.Bounds.Size().ToVector2() * Viewport.Scale),
             Color.White, Game.Data.ShaderPixel, BlendState.AlphaBlend, true);
 
         CreateDebugPreviewIfNecessary(BatchPreviewState.Step3, _finalTarget);
@@ -495,7 +495,7 @@ public class RenderContext : IDisposable
 
             RenderServices.DrawTextureQuad(_debugTarget,     // <=== Draws the debug buffer to the final buffer
                 _debugTarget.Bounds,
-                new Rectangle(_subPixelOffset, _finalTarget.Bounds.Size() + Viewport.Scale * CAMERA_BLEED * 2),
+                new Rectangle(_subPixelOffset, _finalTarget.Bounds.Size().ToVector2() + Viewport.Scale * CAMERA_BLEED * 2),
                 Color.White, Game.Data.ShaderSimple, BlendState.AlphaBlend, false);
         }
         BeforeScreenRender(_finalTarget);
@@ -549,7 +549,7 @@ public class RenderContext : IDisposable
             using var screenshot = new RenderTarget2D(_graphicsDevice, size.X, size.Y);
             _graphicsDevice.SetRenderTarget(screenshot);
 
-            RenderServices.DrawTextureQuad(target, new Rectangle(position, size * Camera.Zoom), new Rectangle(Vector2.Zero, size), Color.White, BlendState.Opaque);
+            RenderServices.DrawTextureQuad(target, new Rectangle(position, (size * Camera.Zoom).ToVector2()), new Rectangle(Vector2.Zero, size.ToVector2()), Color.White, BlendState.Opaque);
             SaveScreenshot(screenshot, screenshotArea.Size.Point());
             _takeScreenShot = null;
 
