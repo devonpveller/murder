@@ -142,7 +142,7 @@ public static partial class RenderServices
         {
             SelectorPosition = selectorPosition,
             PreviousSelectorPosition = previousSelectorPosition,
-            SelectorEasedPosition = easedPosition.Point(),
+            SelectorEasedPosition = (Vector2)easedPosition.Point(),
             MaximumSelectionWidth = maxSelectionWidth,
             LineHeight = lineHeight,
             FinalPosition = finalPosition
@@ -168,7 +168,7 @@ public static partial class RenderServices
             for (int y = startY; y < areaBottom; y += texHeight)
             {
                 Vector2 excess = new(MathF.Max(0, x + texture.Size.X - area.Right), MathF.Max(0, y + texture.Size.Y - area.Bottom));
-                texture.Draw(batch, new Vector2(x, y), new Rectangle(Vector2.Zero, texture.Size - excess), Color.White, Vector2.One, 0, Vector2.Zero, ImageFlip.None, RenderServices.BLEND_NORMAL, MurderBlendState.AlphaBlend, sort);
+                texture.Draw(batch, new Vector2(x, y), new Rectangle(Vector2.Zero, (Vector2)texture.Size - excess), Color.White, Vector2.One, 0, Vector2.Zero, ImageFlip.None, RenderServices.BLEND_NORMAL, MurderBlendState.AlphaBlend, sort);
             }
         }
     }
@@ -227,8 +227,8 @@ public static partial class RenderServices
         };
 
         var image = asset.GetFrame(frameInfo.Frame);
-        Vector2 offset = (Vector2)((Vector2)asset.Origin + origin * (Vector2)image.Size).Round();
-        Vector2 position = pos.Round();
+        Vector2 offset = (Vector2)(((Vector2)asset.Origin + origin * (Vector2)image.Size).Round());
+        Vector2 position = (Vector2)pos.Round();
 
         image.Draw(
             spriteBatch: spriteBatch,
@@ -292,8 +292,8 @@ public static partial class RenderServices
         };
 
         var image = asset.GetFrame(animation.Frames[frameInfo.Frame]);
-        Vector2 offset = (Vector2)((Vector2)asset.Origin + origin * (Vector2)image.Size).Round();
-        Vector2 position = pos.Round();
+        Vector2 offset = (Vector2)(((Vector2)asset.Origin + origin * (Vector2)image.Size).Round());
+        Vector2 position = (Vector2)pos.Round();
 
         image.Draw(
             spriteBatch: spriteBatch,
@@ -611,8 +611,8 @@ public static partial class RenderServices
         };
 
         AtlasCoordinates image = asset.GetFrame(frameInfo.Frame);
-        Vector2 offset = (Vector2)((Vector2)asset.Origin + drawInfo.Origin * (Vector2)image.Size).Round();
-        Vector2 roundedPosition = position.Round();
+        Vector2 offset = (Vector2)(((Vector2)asset.Origin + drawInfo.Origin * (Vector2)image.Size).Round());
+        Vector2 roundedPosition = (Vector2)position.Round();
         void DrawImageAt(Vector2 pos, Color color, bool wash, float sort)
         {
             image.Draw(
@@ -689,8 +689,8 @@ public static partial class RenderServices
         };
 
         AtlasCoordinates image = asset.GetFrame(frameInfo.Frame);
-        Vector2 offset = (Vector2)((Vector2)asset.Origin + drawInfo.Origin * (Vector2)image.Size).Round();
-        Vector2 roundedPosition = position.Round();
+        Vector2 offset = (Vector2)(((Vector2)asset.Origin + drawInfo.Origin * (Vector2)image.Size).Round());
+        Vector2 roundedPosition = (Vector2)position.Round();
         void DrawImageAt(Vector2 pos, Color color, bool wash, float sort)
         {
             image.Draw(
@@ -763,10 +763,10 @@ public static partial class RenderServices
 
         for (int i = 1; i < points.Length; i++)
         {
-            DrawLine(spriteBatch, (points[i - 1] * scale + position).Round(), (points[i] * scale + position).Round(), color, thickness, sort);
+            DrawLine(spriteBatch, (Vector2)((points[i - 1] * scale + position).Round()), (Vector2)((points[i] * scale + position).Round()), color, thickness, sort);
         }
 
-        DrawLine(spriteBatch, (points[points.Length - 1] * scale + position).Round(), (points[0] * scale + position).Round(), color, thickness, sort);
+        DrawLine(spriteBatch, (Vector2)((points[points.Length - 1] * scale + position).Round()), (Vector2)((points[0] * scale + position).Round()), color, thickness, sort);
     }
 
     /// <summary>
