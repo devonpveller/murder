@@ -963,18 +963,8 @@ public class PlayerInput
             return;
         }
 
-        if (enable)
-        {
-            TextInputEXT.StartTextInput();
-
-            TextInputEXT.TextInput += OnDesktopTextInput;
-        }
-        else
-        {
-            TextInputEXT.StopTextInput();
-
-            TextInputEXT.TextInput -= OnDesktopTextInput;
-        }
+        // MonoGame does not have TextInputEXT (FNA-specific API).
+        // Text input handling is left to the host application's keyboard processing.
 
         _userKeyboardInput = new();
 
