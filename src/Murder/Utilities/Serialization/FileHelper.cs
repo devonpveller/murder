@@ -67,7 +67,7 @@ public static partial class FileHelper
             return path;
         }
 
-        return Path.GetFullPath(Path.Join(Environment.CurrentDirectory, path));
+        return Path.GetFullPath(Path.Join(AppDomain.CurrentDomain.BaseDirectory, path));
     }
 
     /// <summary>
