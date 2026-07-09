@@ -44,7 +44,7 @@ namespace Murder.Services
                 // Left
                 texture.Draw(
                     batch,
-                    left,
+                    (Vector2)left,
                     clip: new IntRectangle(0, core.Y, core.X, core.Height),
                     Color.White,
                     Vector2.One,
@@ -72,7 +72,7 @@ namespace Murder.Services
                 // Right
                 texture.Draw(
                     batch,
-                    position: new Vector2(Calculator.RoundToInt(midPosition.X + midSize.X), position.Y - Calculator.RoundToInt(size.Y * origin.Y)).Round(),
+                    position: new Vector2(Calculator.RoundToInt(midPosition.X + midSize.X), position.Y - Calculator.RoundToInt(size.Y * origin.Y)),
                     clip: new IntRectangle(core.X + core.Width, core.Y, core.X, core.Height),
                     Color.White,
                     Vector2.One,
@@ -89,7 +89,7 @@ namespace Murder.Services
                 // Top
                 texture.Draw(
                     batch,
-                    position: position - new Vector2(size.X * origin.X, size.Y * origin.Y).Round(),
+                    position: position - new Vector2(size.X * origin.X, size.Y * origin.Y),
                     clip: new IntRectangle(0, 0, core.Width, core.Y),
                     Color.White,
                     Vector2.One,
@@ -114,7 +114,7 @@ namespace Murder.Services
                 // Bottom
                 texture.Draw(
                     batch,
-                    position: position - new Vector2(size.X * origin.X, size.Y * origin.Y).Round() + new Vector2(0, +size.Y - (texture.Size.Y - core.Y - core.Height)),
+                    position: position - new Vector2(size.X * origin.X, size.Y * origin.Y) + new Vector2(0, +size.Y - (texture.Size.Y - core.Y - core.Height)),
                     clip: new IntRectangle(0, core.Y + core.Height, core.Width, texture.Size.Y - core.Y - core.Height),
                     Color.White,
                     Vector2.One,
