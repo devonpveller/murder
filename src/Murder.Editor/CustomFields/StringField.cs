@@ -1,5 +1,6 @@
 ﻿using ImGuiNET;
 using Murder.Attributes;
+using Murder.Core.Graphics;
 using Murder.Data;
 using Murder.Editor.ImGuiExtended;
 using Murder.Editor.Reflection;
@@ -120,21 +121,24 @@ namespace Murder.Editor.CustomFields
         {
             bool modified = false;
 
-            if (ImGui.BeginCombo("", text))
+            if (Game.Data.FetchAtlas(AtlasIdentifiers.Gameplay) is TextureAtlas gameplayAtlas)
             {
-                foreach (var value in Game.Data.FetchAtlas(AtlasIdentifiers.Gameplay).GetAllEntries())
+                if (ImGui.BeginCombo("", text))
                 {
-                    if (ImGui.MenuItem(value.Name))
+                    foreach (var value in gameplayAtlas.GetAllEntries())
                     {
-                        text = value.Name;
-                        modified = true;
+                        if (ImGui.MenuItem(value.Name))
+                        {
+                            text = value.Name;
+                            modified = true;
+                        }
                     }
+                    ImGui.EndCombo();
                 }
-                ImGui.EndCombo();
-            }
 
-            ImGui.SameLine();
-            Architect.ImGuiTextureManager.DrawPreviewImage(text, 256, Game.Data.FetchAtlas(AtlasIdentifiers.Gameplay));
+                ImGui.SameLine();
+                Architect.ImGuiTextureManager.DrawPreviewImage(text, 256, gameplayAtlas);
+            }
 
             return (modified, text);
         }

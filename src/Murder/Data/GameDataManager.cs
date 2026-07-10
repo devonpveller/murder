@@ -324,7 +324,7 @@ namespace Murder.Data
 
                 if (asset is SpriteAsset spriteAsset)
                 {
-                    FetchAtlas(spriteAsset.Atlas).LoadTextures();
+                    FetchAtlas(spriteAsset.Atlas)?.LoadTextures();
                 }
             }
         }
@@ -1000,7 +1000,7 @@ namespace Murder.Data
         /// <summary>
         /// See <see cref="AtlasIdentifiers"/> for possible atlas.
         /// </summary>
-        public TextureAtlas FetchAtlas(string atlas, bool warnOnError = true)
+        public virtual TextureAtlas? FetchAtlas(string atlas, bool warnOnError = true)
         {
             if (string.IsNullOrEmpty(atlas))
             {
@@ -1020,7 +1020,8 @@ namespace Murder.Data
                 }
                 else
                 {
-                    throw new ArgumentException($"Atlas {atlas} is not loaded and couldn't be loaded from '{filepath}'.");
+                    GameLogger.Error($"Atlas {atlas} is not loaded and couldn't be loaded from '{filepath}'.");
+                    return null;
                 }
             }
 

@@ -29,8 +29,7 @@ namespace Murder.Core
             {
                 foreach (ReferencedAtlas atlas in world.ReferencedAtlas)
                 {
-                    TextureAtlas texture = Game.Data.FetchAtlas(atlas.Id);
-                    texture.LoadTextures();
+                    Game.Data.FetchAtlas(atlas.Id)?.LoadTextures();
                 }
             }
 
