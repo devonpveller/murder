@@ -1020,7 +1020,9 @@ namespace Murder.Data
                 }
                 else
                 {
-                    throw new ArgumentException($"Atlas {atlas} is not loaded and couldn't be loaded from '{filepath}'.");
+                    GameLogger.Warning($"Atlas {atlas} is not loaded and couldn't be loaded from '{filepath}'. Creating empty atlas.");
+                    newAtlas = new TextureAtlas(atlas);
+                    LoadedAtlasses[atlas] = newAtlas;
                 }
             }
 

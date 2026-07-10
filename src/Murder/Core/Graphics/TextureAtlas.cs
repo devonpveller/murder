@@ -89,7 +89,12 @@ namespace Murder.Core.Graphics
             else
             {
                 GameLogger.Log($"Image '{id}' is missing from the atlas");
-                return Game.Data.FetchAtlas(AtlasIdentifiers.Editor).Get("missingImage");
+                // Use TryGet to avoid infinite recursion if the Editor atlas is also empty.
+                if (Game.Data.FetchAtlas(AtlasIdentifiers.Editor).TryGet("missingImage", out AtlasCoordinates missing))
+                {
+                    return missing;
+                }
+                return AtlasCoordinates.Empty;
             }
         }
 
