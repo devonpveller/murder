@@ -221,6 +221,10 @@ namespace Murder.Editor.Systems
         private bool DrawToolbox(RenderContext render)
         {
             var atlas = Game.Data.FetchAtlas(AtlasIdentifiers.Editor);
+            if (atlas is null)
+            {
+                return false;
+            }
             var icon = atlas.Get(_editorMode == EditorMode.Cut ? "cursor_cut" : "cursor_pencil");
 
             Rectangle buttonRect = Rectangle.CenterRectangle(new Vector2(render.Camera.HalfWidth, 30), 39, 39);

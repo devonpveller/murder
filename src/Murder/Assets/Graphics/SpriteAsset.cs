@@ -80,6 +80,13 @@ public class SpriteAsset : GameAsset, IPreview
         NineSlice = nineSlice;
 
         var atlas = Game.Data.FetchAtlas(atlasId);
+        if (atlas is null)
+        {
+            GameLogger.Error($"Atlas '{atlasId}' not found for sprite '{name}'.");
+            Size = size;
+            Frames = ImmutableArray<AtlasCoordinates>.Empty;
+            return;
+        }
         Size = size;
 
         var builder = ImmutableArray.CreateBuilder<AtlasCoordinates>(frames.Length);

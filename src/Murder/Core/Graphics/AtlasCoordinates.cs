@@ -12,7 +12,7 @@ namespace Murder.Core.Graphics
     /// </summary>
     public readonly struct AtlasCoordinates
     {
-        public Texture2D Atlas => Game.Data.FetchAtlas(AtlasId).Textures[AtlasIndex];
+        public Texture2D? Atlas => Game.Data.FetchAtlas(AtlasId)?.Textures[AtlasIndex];
         public Point AtlasSize => new(Atlas.Width, Atlas.Height);
         public int Width => SourceRectangle.Width;
         public int Height => SourceRectangle.Height;

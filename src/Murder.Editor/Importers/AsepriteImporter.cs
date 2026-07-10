@@ -306,7 +306,12 @@ namespace Murder.Editor.Importers
 
         private void SerializeAtlas(string atlasId, Packer packer, SerializeAtlasFlags flags)
         {
-            TextureAtlas atlas = Game.Data.FetchAtlas(atlasId);
+            TextureAtlas? atlas = Game.Data.FetchAtlas(atlasId);
+            if (atlas is null)
+            {
+                GameLogger.Error($"Atlas '{atlasId}' not found during serialization.");
+                return;
+            }
 
             // Delete any previous atlas in the source directory.
             string atlasSourceDirectoryPath = Path.Join(GetSourcePackedPath(), Game.Profile.AtlasFolderName);

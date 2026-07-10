@@ -185,7 +185,11 @@ public class FloorWithBatchOptimizationRenderSystem : IMurderRenderSystem, IExit
                         floorAsset.Image.Guid != Guid.Empty)
                     {
                         SpriteAsset floorSpriteAsset = floorAsset.Image.Asset;
-                        Texture2D[] floorSpriteAtlas = Game.Data.FetchAtlas(floorSpriteAsset.Atlas).Textures;
+                        Texture2D[]? floorSpriteAtlas = Game.Data.FetchAtlas(floorSpriteAsset.Atlas)?.Textures;
+                        if (floorSpriteAtlas is null)
+                        {
+                            continue;
+                        }
 
                         // Draw the actual floor
                         if (floorSpriteAsset is not null && x < maxX && y < maxY)

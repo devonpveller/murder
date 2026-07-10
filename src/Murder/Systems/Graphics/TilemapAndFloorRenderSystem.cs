@@ -57,7 +57,7 @@ public class TilemapAndFloorRenderSystem : IMurderRenderSystem
             if (hasFloor)
             {
                 floorSpriteAsset = floorAsset.Image.Asset;
-                floorSpriteAtlas = Game.Data.FetchAtlas(floorSpriteAsset.Atlas).Textures;
+                floorSpriteAtlas = Game.Data.FetchAtlas(floorSpriteAsset.Atlas)?.Textures;
             }
 
             for (int y = minY; y <= maxY; y++)
