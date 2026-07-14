@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Murder.Core.Graphics;
 using Murder.Diagnostics;
+using Murder.Utilities.Serialization;
 using System.IO.Compression;
 
 namespace Murder.Services;
@@ -49,7 +50,17 @@ public static class TextureServices
 
         gzipDecodeStream.CopyTo(memStream);
 
-        Texture2D texture = Texture2D.FromStream(graphicsDevice, memStream);
+        // Decode QOI data to raw RGBA pixels
+        byte[] qoiData = memStream.ToArray();
+        byte[] rgbaPixels = QoiDecoder.Decode(qoiData);
+
+        // Parse QOI header to get dimensions
+        int width = System.Buffers.Binary.BinaryPrimitives.ReadInt32BigEndian(qoiData.AsSpan(4, 4));
+        int height = System.Buffers.Binary.BinaryPrimitives.ReadInt32BigEndian(qoiData.AsSpan(8, 4));
+
+        // Create texture from raw RGBA data
+        Texture2D texture = new(graphicsDevice, width, height);
+        texture.SetData(rgbaPixels);
 
         gzipDecodeStream.Close();
         memStream.Close();
