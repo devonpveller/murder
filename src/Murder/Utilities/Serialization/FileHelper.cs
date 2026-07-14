@@ -67,32 +67,27 @@ public static partial class FileHelper
             return path;
         }
 
-        return Path.GetFullPath(Path.Join(Microsoft.Xna.Framework.TitleLocation.Path, path));
+        return Path.GetFullPath(Path.Join(AppContext.BaseDirectory, path));
     }
-
-    private static string? _osVersion = null;
 
     /// <summary>
     /// Gets the base path for save files.
     /// </summary>
     public static string GetSaveBasePath(string gameName)
     {
-        _osVersion ??= SDL3.SDL.SDL_GetPlatform();
-
-        if (_osVersion.Equals("Windows"))
+        if (OperatingSystem.IsWindows())
         {
             return Path.Join(Environment.GetFolderPath(
                 Environment.SpecialFolder.LocalApplicationData), gameName);
         }
 
-        if (_osVersion.Equals("Mac OS X"))
+        if (OperatingSystem.IsMacOS())
         {
             return Path.Join(Environment.GetFolderPath(
                 Environment.SpecialFolder.ApplicationData), gameName);
         }
-        
-        if (_osVersion.Equals("Linux") || _osVersion.Equals("FreeBSD") ||
-            _osVersion.Equals("OpenBSD") || _osVersion.Equals("NetBSD"))
+
+        if (OperatingSystem.IsLinux())
         {
             if (Environment.GetEnvironmentVariable("XDG_DATA_HOME") is string dataPath)
             {
@@ -105,7 +100,7 @@ public static partial class FileHelper
             }
         }
 
-        return SDL3.SDL.SDL_GetPrefPath(null, gameName);
+        return Path.Join(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), gameName);
     }
 
     public static string GetScreenshotFolder()
