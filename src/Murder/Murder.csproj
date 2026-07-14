@@ -40,8 +40,12 @@
     <EmbeddedResource Include="resources\Icon.bmp" LogicalName="Icon.bmp" />
   </ItemGroup>
 
-  <ItemGroup>
+  <!-- Vendored MonoGame source (composition context). Falls back to NuGet for standalone builds. -->
+  <ItemGroup Condition="Exists('..\..\..\MonoGame\MonoGame.Framework\MonoGame.Framework.DesktopGL.csproj')">
     <ProjectReference Include="..\..\..\MonoGame\MonoGame.Framework\MonoGame.Framework.DesktopGL.csproj" />
+  </ItemGroup>
+  <ItemGroup Condition="!Exists('..\..\..\MonoGame\MonoGame.Framework\MonoGame.Framework.DesktopGL.csproj')">
+    <PackageReference Include="MonoGame.Framework.DesktopGL" Version="3.8.4.1" />
   </ItemGroup>
 
   <ItemGroup>
