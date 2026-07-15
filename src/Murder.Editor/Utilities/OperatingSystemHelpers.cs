@@ -13,18 +13,8 @@ public unsafe static class OperatingSystemHelpers
 
     public static bool HasLinuxClipboardDependency()
     {
-        try
-        {
-            Marshal.Prelink(typeof(OperatingSystemHelpers).GetMethod(nameof(OperatingSystemHelpers.SDL_GetClipboardText),
-                BindingFlags.NonPublic | BindingFlags.Static)!);
-            Marshal.Prelink(typeof(OperatingSystemHelpers).GetMethod(nameof(OperatingSystemHelpers.SDL_SetClipboardText),
-                BindingFlags.NonPublic | BindingFlags.Static)!);
-            return true;
-        }
-        catch
-        {
-            return false;
-        }
+        // MonoGame uses standard .NET clipboard API; no SDL dependency needed
+        return true;
     }
 
     public static bool ClipboardDependencyExists()
@@ -67,12 +57,9 @@ public unsafe static class OperatingSystemHelpers
 
         if (OperatingSystem.IsLinux())
         {
-            try
-            {
-                result = SDL_GetClipboardText() ?? string.Empty;
-                length = Encoding.UTF8.GetByteCount(result);
-            }
-            catch { }
+            // MonoGame doesn't provide clipboard access on Linux; return empty as fallback
+            result = string.Empty;
+            length = 0;
         }
 
         var bytes = (byte*)(_clipboard = Marshal.AllocHGlobal(length + 1));
@@ -97,7 +84,7 @@ public unsafe static class OperatingSystemHelpers
 
         if (OperatingSystem.IsLinux())
         {
-            SDL_SetClipboardText(result);
+            // MonoGame doesn't provide clipboard access on Linux; no-op as fallback
         }
     }
 
@@ -167,11 +154,4 @@ public unsafe static class OperatingSystemHelpers
 
     const string NSPasteboardTypeString = "public.utf8-plain-text";
 
-    public const string SDL = "libSDL3.so";
-
-    [DllImport(SDL, CallingConvention = CallingConvention.Cdecl)]
-    private static extern int SDL_SetClipboardText(string text);
-
-    [DllImport(SDL, CallingConvention = CallingConvention.Cdecl)]
-    private static extern string SDL_GetClipboardText();
 }

@@ -40,8 +40,9 @@
     <EmbeddedResource Include="resources\Icon.bmp" LogicalName="Icon.bmp" />
   </ItemGroup>
 
+  <!-- Vendored MonoGame source (composition context: vendor/murder + vendor/MonoGame in monogame-engine). -->
   <ItemGroup>
-    <PackageReference Include="Murder.FNA" Version="26.4.1" />
+    <ProjectReference Include="..\..\..\MonoGame\MonoGame.Framework\MonoGame.Framework.DesktopGL.csproj" />
   </ItemGroup>
 
   <ItemGroup>

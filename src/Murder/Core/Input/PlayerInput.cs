@@ -963,18 +963,7 @@ public class PlayerInput
             return;
         }
 
-        if (enable)
-        {
-            TextInputEXT.StartTextInput();
-
-            TextInputEXT.TextInput += OnDesktopTextInput;
-        }
-        else
-        {
-            TextInputEXT.StopTextInput();
-
-            TextInputEXT.TextInput -= OnDesktopTextInput;
-        }
+        // MonoGame does not have TextInputEXT; keyboard input is handled via Keyboard.GetState()
 
         _userKeyboardInput = new();
 

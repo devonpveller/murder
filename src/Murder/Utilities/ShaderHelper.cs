@@ -177,7 +177,16 @@ namespace Murder.Utilities
                 {
                     try
                     {
-                        return annotation.GetValueVector2().ToSysVector2();
+                        // MonoGame's EffectAnnotation doesn't expose GetValue();
+                        // use reflection to read the internal data field
+                        var dataField = annotation.GetType().GetField("data", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+                        if (dataField != null)
+                        {
+                            var data = dataField.GetValue(annotation);
+                            if (data is Microsoft.Xna.Framework.Vector2 v)
+                                return v.ToSysVector2();
+                        }
+                        return null;
                     }
                     catch (Exception e)
                     {
