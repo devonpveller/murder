@@ -50,14 +50,25 @@ public static class QoiDecoder
         int offset = HeaderSize;
         int pixelIndex = 0;
 
-        while (offset < data.Length)
+        while (offset < data.Length && pixelIndex < pixelCount)
         {
             byte b0 = data[offset];
 
             if (b0 == 0x00)
             {
+                // End marker (8 zero bytes) or index entry
+                if (offset + 8 <= data.Length && data.Slice(offset, 8).SequenceEqual(new byte[8]))
+                {
+                    // End of image data
+                    break;
+                }
+                // Guard against truncated data
+                if (offset + 1 >= data.Length)
+                    break;
                 // Index entry
                 int idx = data[offset + 1];
+                if (idx >= HashTableSize)
+                    break; // Corrupted or unexpected data
                 prev = index[idx];
                 offset += 2;
             }
