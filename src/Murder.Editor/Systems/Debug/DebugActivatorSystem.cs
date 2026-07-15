@@ -111,14 +111,7 @@ namespace Murder.Editor.Systems
 
         private void UpdateEditorInput()
         {
-            if (_showConsole || _showEditorSystems)
-            {
-                TextInputEXT.StartTextInput();
-            }
-            else
-            {
-                TextInputEXT.StopTextInput();
-            }
+            // TextInputEXT not available in MonoGame; text input handled through keyboard events
         }
     }
 }

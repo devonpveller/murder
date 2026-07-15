@@ -531,7 +531,7 @@ namespace Murder
                 // This seems to be a bug in Monogame
                 // This line must be repeated otherwise the window won't be
                 // borderless.
-                Window.IsBorderlessEXT = false;
+                Window.IsBorderless = false;
             }
 
             if (notification.ApplyToSettings is WindowChangeSettings settings)
@@ -549,23 +549,12 @@ namespace Murder
 
         public Point GetWindowSize()
         {
-            SDL3.SDL.SDL_GetWindowSizeInPixels(Window.Handle, out int width, out int height);
-            return (width > 0 && height > 0) ? new Point(width, height) : new Point(Window.ClientBounds.Width, Window.ClientBounds.Height);
+            return new Point(Window.ClientBounds.Width, Window.ClientBounds.Height);
         }
 
         public Point GetDisplaySize()
         {
-            uint currentDisplayIndex = SDL3.SDL.SDL_GetDisplayForWindow(Window.Handle);
-            SDL3.SDL.SDL_GetDisplayBounds(currentDisplayIndex, out var rect);
-            
-            // Find the DPI scale by comparing the real window size and the pixel sizes
-            SDL3.SDL.SDL_GetWindowSizeInPixels(Window.Handle, out int pixelWidth, out int pixelHeight);
-            float dpiScaleX = (float)pixelWidth / Game.Instance.Window.ClientBounds.Width;
-            
-            int width = (int)(rect.w * dpiScaleX);
-            int height = (int)(rect.h * dpiScaleX);
-
-            return (width > 0 && height > 0) ? new Point(width, height) : new Point(Window.ClientBounds.Width, Window.ClientBounds.Height);
+            return new Point(Window.ClientBounds.Width, Window.ClientBounds.Height);
         }
 
         /// <summary>
@@ -583,13 +572,13 @@ namespace Murder
                 // TODO: Do we really want to save our last size?
                 _windowedSize = GetWindowSize();
 
-                Window.IsBorderlessEXT = true;
+                Window.IsBorderless = true;
                 _graphics.IsFullScreen = true;
             }
             else
             {
                 _graphics.IsFullScreen = false;
-                Window.IsBorderlessEXT = false;
+                Window.IsBorderless = false;
             }
 
             _graphics.PreferredBackBufferWidth = screenSize.X;
@@ -1040,7 +1029,7 @@ namespace Murder
         /// </summary>
         public virtual void EndImGuiTheme() { }
 
-        protected override void OnExiting(object sender, EventArgs args)
+        protected override void OnExiting(object sender, Microsoft.Xna.Framework.ExitingEventArgs args)
         {
             GameLogger.Log("Wrapping up, bye!");
 

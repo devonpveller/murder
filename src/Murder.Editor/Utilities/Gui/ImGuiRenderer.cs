@@ -273,14 +273,8 @@ namespace Murder.Editor.ImGuiExtended
             //};
             ///////////////////////////////////////////
 
-            // FNA-specific ///////////////////////////
-            TextInputEXT.TextInput += c =>
-            {
-                if (c == '\t') return;
-
-                ImGui.GetIO().AddInputCharacter(c);
-            };
-            ///////////////////////////////////////////
+            // MonoGame text input handled through keyboard events
+            // TextInputEXT not available in MonoGame
 
             ImGui.GetIO().Fonts.AddFontDefault();
         }

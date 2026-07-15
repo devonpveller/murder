@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using Murder.Utilities;
-using SDL3;
-using System.Runtime.InteropServices;
 
 namespace Murder.Editor.Core;
 
@@ -73,26 +72,28 @@ public partial class MouseCursor : IDisposable
     public IntPtr Handle { get; private set; }
 
     private bool _disposed;
+    internal readonly Microsoft.Xna.Framework.Input.MouseCursor _mgCursor;
 
     static MouseCursor()
     {
-        Arrow = new MouseCursor(SDL.SDL_SystemCursor.SDL_SYSTEM_CURSOR_DEFAULT);
-        IBeam = new MouseCursor(SDL.SDL_SystemCursor.SDL_SYSTEM_CURSOR_TEXT);
-        Wait = new MouseCursor(SDL.SDL_SystemCursor.SDL_SYSTEM_CURSOR_WAIT);
-        Crosshair = new MouseCursor(SDL.SDL_SystemCursor.SDL_SYSTEM_CURSOR_CROSSHAIR);
-        WaitArrow = new MouseCursor(SDL.SDL_SystemCursor.SDL_SYSTEM_CURSOR_PROGRESS);
-        SizeNWSE = new MouseCursor(SDL.SDL_SystemCursor.SDL_SYSTEM_CURSOR_NWSE_RESIZE);
-        SizeNESW = new MouseCursor(SDL.SDL_SystemCursor.SDL_SYSTEM_CURSOR_NESW_RESIZE);
-        SizeWE = new MouseCursor(SDL.SDL_SystemCursor.SDL_SYSTEM_CURSOR_EW_RESIZE);
-        SizeNS = new MouseCursor(SDL.SDL_SystemCursor.SDL_SYSTEM_CURSOR_NS_RESIZE);
-        SizeAll = new MouseCursor(SDL.SDL_SystemCursor.SDL_SYSTEM_CURSOR_MOVE);
-        No = new MouseCursor(SDL.SDL_SystemCursor.SDL_SYSTEM_CURSOR_NOT_ALLOWED);
-        Hand = new MouseCursor(SDL.SDL_SystemCursor.SDL_SYSTEM_CURSOR_POINTER);
+        Arrow = new MouseCursor(Microsoft.Xna.Framework.Input.MouseCursor.Arrow);
+        IBeam = new MouseCursor(Microsoft.Xna.Framework.Input.MouseCursor.IBeam);
+        Wait = new MouseCursor(Microsoft.Xna.Framework.Input.MouseCursor.Wait);
+        Crosshair = new MouseCursor(Microsoft.Xna.Framework.Input.MouseCursor.Crosshair);
+        WaitArrow = new MouseCursor(Microsoft.Xna.Framework.Input.MouseCursor.WaitArrow);
+        SizeNWSE = new MouseCursor(Microsoft.Xna.Framework.Input.MouseCursor.SizeNWSE);
+        SizeNESW = new MouseCursor(Microsoft.Xna.Framework.Input.MouseCursor.SizeNESW);
+        SizeWE = new MouseCursor(Microsoft.Xna.Framework.Input.MouseCursor.SizeWE);
+        SizeNS = new MouseCursor(Microsoft.Xna.Framework.Input.MouseCursor.SizeNS);
+        SizeAll = new MouseCursor(Microsoft.Xna.Framework.Input.MouseCursor.SizeAll);
+        No = new MouseCursor(Microsoft.Xna.Framework.Input.MouseCursor.No);
+        Hand = new MouseCursor(Microsoft.Xna.Framework.Input.MouseCursor.Hand);
     }
 
-    private MouseCursor(SDL.SDL_SystemCursor cursor)
+    private MouseCursor(Microsoft.Xna.Framework.Input.MouseCursor mgCursor)
     {
-        Handle = SDL.SDL_CreateSystemCursor(cursor);
+        _mgCursor = mgCursor;
+        Handle = mgCursor.Handle;
     }
 
     private MouseCursor(IntPtr handle)
@@ -108,53 +109,8 @@ public partial class MouseCursor : IDisposable
     /// <param name="originy">Y cordinate of the image that will be used for mouse position.</param>
     public static MouseCursor FromTexture2D(Texture2D texture, int originx, int originy)
     {
-        IntPtr surface = IntPtr.Zero;
-        IntPtr handle = IntPtr.Zero;
-
-        try
-        {
-            byte[] pixels = new byte[texture.Width * texture.Height * 4];
-            texture.GetData(pixels);
-
-            surface = CreateRGBSurfaceFrom(pixels, texture.Width, texture.Height);
-            if (surface == IntPtr.Zero)
-            {
-                throw new InvalidOperationException("Failed to create surface for mouse cursor: " + SDL.SDL_GetError());
-            }
-
-            handle = SDL.SDL_CreateColorCursor(surface, originx, originy);
-            if (handle == IntPtr.Zero)
-            {
-                throw new InvalidOperationException("Failed to set surface for mouse cursor: " + SDL.SDL_GetError());
-            }
-        }
-        finally
-        {
-            if (surface != IntPtr.Zero)
-            {
-                SDL.SDL_DestroySurface(surface);
-            }
-        }
-
-        return new MouseCursor(handle);
-    }
-
-    public static IntPtr CreateRGBSurfaceFrom(byte[] pixels, int width, int height)
-    {
-        GCHandle handle = GCHandle.Alloc(pixels, GCHandleType.Pinned);
-        nint pixelPtr = handle.AddrOfPinnedObject();
-
-        try
-        {
-            IntPtr surface = SDL.SDL_CreateSurfaceFrom(
-                width, height, SDL.SDL_PixelFormat.SDL_PIXELFORMAT_ABGR8888, pixelPtr, pitch: width * 4);
-
-            return surface;
-        }
-        finally
-        {
-            handle.Free();
-        }
+        var mgCursor = Microsoft.Xna.Framework.Input.MouseCursor.FromTexture2D(texture, originx, originy);
+        return new MouseCursor(mgCursor);
     }
 
     public void Dispose()
@@ -170,12 +126,10 @@ public partial class MouseCursor : IDisposable
 
     private void PlatformDispose()
     {
-        if (Handle == IntPtr.Zero)
+        if (_mgCursor != null)
         {
-            return;
+            _mgCursor.Dispose();
         }
-
-        SDL.SDL_DestroyCursor(Handle);
         Handle = IntPtr.Zero;
     }
 }

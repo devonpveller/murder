@@ -2,6 +2,7 @@
 using Murder.Core.Geometry;
 using Murder.Diagnostics;
 using System.Numerics;
+using Vector2 = System.Numerics.Vector2;
 
 namespace Murder.Utilities
 {
@@ -177,7 +178,12 @@ namespace Murder.Utilities
                 {
                     try
                     {
-                        return annotation.GetValueVector2().ToSysVector2();
+                        // MonoGame's EffectAnnotation doesn't have GetValueVector2; read floats directly
+                        float[] floats = parameter.GetValueSingleArray();
+                        if (floats != null && floats.Length >= 2)
+                            return new Vector2(floats[0], floats[1]);
+                        GameLogger.Error($"Failed to parse shader param '{parameter.Name}' anotation '{anotationName}' into Vector2");
+                        return null;
                     }
                     catch (Exception e)
                     {
