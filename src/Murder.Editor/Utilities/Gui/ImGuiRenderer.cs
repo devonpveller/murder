@@ -557,8 +557,7 @@ namespace Murder.Editor.ImGuiExtended
                     {
                         pass.Apply();
 
-#pragma warning disable CS0618 // // FNA does not expose an alternative method.
-                        _graphicsDevice.DrawIndexedPrimitives(
+_graphicsDevice.DrawIndexedPrimitives(
                             primitiveType: PrimitiveType.TriangleList,
                             baseVertex: vtxOffset,
                             minVertexIndex: 0,
@@ -566,7 +565,6 @@ namespace Murder.Editor.ImGuiExtended
                             startIndex: idxOffset,
                             primitiveCount: (int)drawCmd.ElemCount / 3
                         );
-#pragma warning restore CS0618
                     }
 
                     idxOffset += (int)drawCmd.ElemCount;
