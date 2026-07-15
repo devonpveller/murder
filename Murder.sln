@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.32916.344
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MonoGame.Framework.DesktopGL", "..\..\..\MonoGame\MonoGame.Framework\MonoGame.Framework.DesktopGL.csproj", "{A774EE51-6EE2-4832-9596-927DE89ED30A}"
+EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Murder", "src\Murder\Murder.csproj", "{D34E227F-593A-47FA-B7C7-34236DE5715F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Murder.Editor", "src\Murder.Editor\Murder.Editor.csproj", "{A0D37E85-85DB-4ABA-BC9E-D4EE6009E0BC}"
@@ -29,8 +31,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A774EE51-6EE2-4832-9596-927DE89ED30A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A774EE51-6EE2-4832-9596-927DE89ED30A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A774EE51-6EE2-4832-9596-927DE89ED30A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A774EE51-6EE2-4832-9596-927DE89ED30A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D34E227F-593A-47FA-B7C7-34236DE5715F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D34E227F-593A-47FA-B7C7-34236DE5715F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D34E227F-593A-47FA-B7C7-34236DE5715F}.Debug|Any CPU.DependsOn.{A774EE51-6EE2-4832-9596-927DE89ED30A} = Debug|Any CPU
+		{D34E227F-593A-47FA-B7C7-34236DE5715F}.Release|Any CPU.DependsOn.{A774EE51-6EE2-4832-9596-927DE89ED30A} = Release|Any CPU
 		{D34E227F-593A-47FA-B7C7-34236DE5715F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D34E227F-593A-47FA-B7C7-34236DE5715F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A0D37E85-85DB-4ABA-BC9E-D4EE6009E0BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
