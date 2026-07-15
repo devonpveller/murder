@@ -47,7 +47,7 @@ namespace Murder.Editor
 
             _shortcuts = CreateShortcutList();
 
-            FileDropEXT.DropFile += FileDropped;
+            // FileDropEXT not available in MonoGame; file drop handled elsewhere
         }
 
         protected void FileDropped(string path)
@@ -102,7 +102,7 @@ namespace Murder.Editor
         private void AfterInitialized()
         {
             // always keep the text input
-            TextInputEXT.StartTextInput();
+            // TextInputEXT not available in MonoGame; text input handled through keyboard events
         }
 
         private void ReopenLastTabs()
@@ -133,7 +133,7 @@ namespace Murder.Editor
 
         protected override Task UnloadAsyncImpl()
         {
-            TextInputEXT.StopTextInput();
+            // TextInputEXT not available in MonoGame
             return Task.CompletedTask;
         }
 

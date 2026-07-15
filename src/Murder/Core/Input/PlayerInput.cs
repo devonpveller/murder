@@ -963,18 +963,11 @@ public class PlayerInput
             return;
         }
 
-        if (enable)
-        {
-            TextInputEXT.StartTextInput();
-
-            TextInputEXT.TextInput += OnDesktopTextInput;
-        }
-        else
-        {
-            TextInputEXT.StopTextInput();
-
-            TextInputEXT.TextInput -= OnDesktopTextInput;
-        }
+        // MonoGame's GameWindow.IsTextInputHandled and OnTextInput are internal,
+        // so we handle text input through keyboard events directly.
+        _registerKeyboardInputs = enable;
+        _maxCharacters = maxCharacters;
+        _userKeyboardInput = new();
 
         _userKeyboardInput = new();
 

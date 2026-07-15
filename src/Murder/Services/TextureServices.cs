@@ -48,8 +48,13 @@ public static class TextureServices
         using MemoryStream memStream = new();
 
         gzipDecodeStream.CopyTo(memStream);
+        byte[] qoiData = memStream.ToArray();
 
-        Texture2D texture = Texture2D.FromStream(graphicsDevice, memStream);
+        // Decode QOI to RGBA
+        byte[] rgba = Murder.Utilities.QoiDecoder.Decode(qoiData, out int w, out int h);
+
+        Texture2D texture = new Texture2D(graphicsDevice, w, h);
+        texture.SetData(rgba);
 
         gzipDecodeStream.Close();
         memStream.Close();

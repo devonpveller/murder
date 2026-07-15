@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 
 namespace Murder.Serialization;
@@ -67,7 +68,7 @@ public static partial class FileHelper
             return path;
         }
 
-        return Path.GetFullPath(Path.Join(Microsoft.Xna.Framework.TitleLocation.Path, path));
+        return Path.GetFullPath(Path.Join(AppContext.BaseDirectory, path));
     }
 
     private static string? _osVersion = null;
@@ -77,7 +78,7 @@ public static partial class FileHelper
     /// </summary>
     public static string GetSaveBasePath(string gameName)
     {
-        _osVersion ??= SDL3.SDL.SDL_GetPlatform();
+        _osVersion ??= RuntimeInformation.OSDescription;
 
         if (_osVersion.Equals("Windows"))
         {
@@ -105,7 +106,7 @@ public static partial class FileHelper
             }
         }
 
-        return SDL3.SDL.SDL_GetPrefPath(null, gameName);
+        return Path.Join(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), gameName);
     }
 
     public static string GetScreenshotFolder()

@@ -98,7 +98,7 @@ public class CursorTextureManager : IDisposable
             if (anim.Frame < info.Cursors.Length)
             {
                 // TODO: Fix shaders so we can do this. @_@
-                SDL3.SDL.SDL_SetCursor(info.Cursors[anim.Frame].Handle);
+                Microsoft.Xna.Framework.Input.Mouse.SetCursor(info.Cursors[anim.Frame]._mgCursor ?? Microsoft.Xna.Framework.Input.MouseCursor.Arrow);
                 _lastFrame = anim.Frame;
             }
         }
